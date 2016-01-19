@@ -144,6 +144,9 @@ def download_image(counter, url, sha256, timeout=60):
         response = requests.get(url, headers=headers, timeout=timeout)
 
         if response.status_code != requests.codes.OK:  # Status 200
+            logger.error("Line {number}: Bad status code {status}: {url}".format(number=counter,
+                                                                                 status=response.status_code,
+                                                                                 url=url.encode("utf-8", "ignore")))
             return None
 
         # Check if returned image
