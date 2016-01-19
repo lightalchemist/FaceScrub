@@ -9,8 +9,8 @@ To view a copy of this license, visit <http://creativecommons.org/licenses/by-nc
 > A data-driven approach to cleaning large face datasets.
 > Proc. IEEE International Conference on Image Processing (ICIP), Paris, France, Oct. 27-30, 2014.
 
-If you are using Python 2, then use the script python2_download_facescrub.py.
-If you are using Python 3, then use the script python3_download_facescrub.py.
+If you are using Python 2, use the script python2_download_facescrub.py.
+If you are using Python 3, use the script python3_download_facescrub.py.
 
 This code was tested on Ubuntu 14.04 and Mac OS X El Capitan.
 
