@@ -153,6 +153,9 @@ def download_image(counter, url, sha256, timeout=60):
             content_type = response.headers["content-type"]  # Sometimes this is missing, raising KeyError
 
         if (content_type is None) or not content_type.startswith("image"):
+            logger.error("Line {number}: Invalid content-type {content_type}: {url}".format(number=counter,
+                                                                                            content_type=content_type,
+                                                                                            url=url.encode("utf-8", "ignore")))
             return None
 
         if hashbinary(response.content) != sha256:
