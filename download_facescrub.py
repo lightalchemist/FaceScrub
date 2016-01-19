@@ -2,25 +2,8 @@
 # -*- coding: utf-8 -*-
 
 """
-Copyright (c) 2016 Advanced Digital Sciences Center (ADSC), Illinois@Singapore Pte Ltd
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
+This script is released under a Creative Commons Attribution-NonCommercial 4.0 International Public License.
+To view a copy of this license, visit <http://creativecommons.org/licenses/by-nc/4.0/legalcode>
 
 File: download_facescrub.py
 Author: Hong-Wei Ng
@@ -32,13 +15,17 @@ Tested on Ubuntu 14.04, Python 2.7.
 
 # Requirements:
 pip install requests
-pip install Pillow        # Interchangeable with PIL. Can be ignored if you already have PIL installed
-pip install python-magic  # (Optional, but good to have for detecting file type) May not work on Windows
+
+# Interchangeable with PIL. Can be ignored if you already have PIL installed
+pip install Pillow
+
+# Optional, but good to have, for detecting file type. May not work on Windows
+pip install python-magic
 
 # Steps to download FaceScrub dataset
-1) First, obtain the FaceScrub files containing links to the images from http://vintage.winklerbros.net/facescrub.html
-2) Next, set MY_USER_AGENT_STRING below. You can obtain it by visiting a site such as https://www.whatismybrowser.com/detect/what-is-my-user-agent
-3) Finally, run download_facescrub.py to download the dataset.
+1. First, obtain the FaceScrub files containing links to the images from http://vintage.winklerbros.net/facescrub.html
+2. Next, set MY_USER_AGENT_STRING below. You can obtain it by visiting a site such as https://www.whatismybrowser.com/detect/what-is-my-user-agent
+3. Finally, run download_facescrub.py to download the dataset.
 
 # Example to download actors images.
 
