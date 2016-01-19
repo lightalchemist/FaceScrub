@@ -1,12 +1,15 @@
 # Script to download FaceScrub dataset
 
-This script downloads the [FaceScrub](http://vintage.winklerbros.net/facescrub.html) dataset described in 
+This project is released under a Creative Commons Attribution-NonCommercial 4.0 International Public License.
+To view a copy of this license, visit <http://creativecommons.org/licenses/by-nc/4.0/legalcode>
+
+**download_facescrub.py** downloads the [FaceScrub](http://vintage.winklerbros.net/facescrub.html) dataset described in 
 
 > H.-W. Ng, S. Winkler.
 > A data-driven approach to cleaning large face datasets.
 > Proc. IEEE International Conference on Image Processing (ICIP), Paris, France, Oct. 27-30, 2014.
 
-This script was tested on Ubuntu 14.04, Python 2.7.
+This code was tested on Ubuntu 14.04, Python 2.7.
 
 # Requirements:
 
