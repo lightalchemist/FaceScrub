@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Copyright (c) 2016 Advanced Digital Sciences Center (ADSC)
+Copyright (c) 2016 Advanced Digital Sciences Center (ADSC), Illinois@Singapore Pte Ltd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -30,16 +30,19 @@ Description: Script to download FaceScrub dataset
 
 Tested on Ubuntu 14.04, Python 2.7.
 
-Requirements:
-    pip install requests
-    pip install Pillow        # Interchangeable with PIL. Can be ignored if you already have PIL installed
-    pip install python-magic  # (Optional, but good to have for detecting file type) May not work on Windows
+# Requirements:
+pip install requests
+pip install Pillow        # Interchangeable with PIL. Can be ignored if you already have PIL installed
+pip install python-magic  # (Optional, but good to have for detecting file type) May not work on Windows
 
+# Steps to download FaceScrub dataset
+1) First, obtain the FaceScrub files containing links to the images from http://vintage.winklerbros.net/facescrub.html
+2) Next, set MY_USER_AGENT_STRING below. You can obtain it by visiting a site such as https://www.whatismybrowser.com/detect/what-is-my-user-agent
+3) Finally, run download_facescrub.py to download the dataset.
 
-First, obtain the FaceScrub files containing links to the images from http://vintage.winklerbros.net/facescrub.html
-Next, run download_facescrub.py to download the dataset.
+# Example to download actors images.
 
-Example to download actors images. actors_users_normal_bbox.txt is obtained from the above link.
+Note: actors_users_normal_bbox.txt is obtained from the above link.
 
 >>> # To download and save full size images only
 >>> python download_facescrub.py actors_users_normal_bbox.txt actors/
