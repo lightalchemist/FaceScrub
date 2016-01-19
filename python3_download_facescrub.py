@@ -5,7 +5,7 @@
 This script is released under a Creative Commons Attribution-NonCommercial 4.0 International Public License.
 To view a copy of this license, visit <http://creativecommons.org/licenses/by-nc/4.0/legalcode>
 
-File: download_facescrub.py
+File: python3_download_facescrub.py
 Author: Hong-Wei Ng
 Email: lightalchemist@gmail.com
 Github: https://github.com/lightalchemist
@@ -32,13 +32,13 @@ pip install python-magic
 Note: actors_users_normal_bbox.txt is obtained from the above link.
 
 >>> # To download and save full size images only
->>> python download_facescrub.py actors_users_normal_bbox.txt actors/
+>>> python python3_download_facescrub.py actors_users_normal_bbox.txt actors/
 
 >>> # To download and save full size images along with cropped faces
->>> python download_facescrub.py actors_users_normal_bbox.txt actors/ --crop_face
+>>> python python3_download_facescrub.py actors_users_normal_bbox.txt actors/ --crop_face
 
 >>> # Additional (optional) arguments to set log file name and time out to 10 seconds
->>> python download_facescrub.py actors_users_normal_bbox.txt actors/ --crop_face --logfile=download.log --timeout=10
+>>> python python3_download_facescrub.py actors_users_normal_bbox.txt actors/ --crop_face --logfile=download.log --timeout=10
 
 The above code will save full size images to the directory actors/images and faces (if required) to actors/faces
 
@@ -48,7 +48,7 @@ import os
 import shutil
 import mimetypes
 import logging
-import urlparse
+import urllib.parse
 import hashlib
 import argparse
 
@@ -114,7 +114,7 @@ def hashbinary(raw_bytes, hasher=None):
 def get_referer(url):
     """Returns a made up a referer from the given url"""
 
-    parsed_uri = urlparse.urlparse(url)
+    parsed_uri = urllib.parse.urlparse(url)
     netloc = parsed_uri.netloc
     scheme = parsed_uri.scheme
     if netloc.startswith("fansshare"):  # Hack for fansshare.
@@ -193,7 +193,7 @@ def parse_line(line):
     image_id = int(parts[1])
     face_id = int(parts[2])
     url = parts[3]
-    bbox = map(int, parts[4].split(','))  # This is a list of int
+    bbox = list(map(int, parts[4].split(',')))  # This is a list of int
     sha256 = parts[5]
 
     return name, image_id, face_id, url, bbox, sha256

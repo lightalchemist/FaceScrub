@@ -9,7 +9,10 @@ To view a copy of this license, visit <http://creativecommons.org/licenses/by-nc
 > A data-driven approach to cleaning large face datasets.
 > Proc. IEEE International Conference on Image Processing (ICIP), Paris, France, Oct. 27-30, 2014.
 
-This code was tested on Ubuntu 14.04, Python 2.7.
+If you are using Python 2, then use the script python2_download_facescrub.py.
+If you are using Python 3, then use the script python3_download_facescrub.py.
+
+This code was tested on Ubuntu 14.04 and Mac OS X El Capitan.
 
 # Requirements:
 
@@ -35,14 +38,16 @@ pip install python-magic
 Note: actors_users_normal_bbox.txt is obtained from the above link.
 
 ```bash
+# In the following code, <version number> is "2" if you use Python 2, and "3" if you use Python 3.
+
 # To download and save full size images only
-python download_facescrub.py actors_users_normal_bbox.txt actors/
+python python<version number>_download_facescrub.py actors_users_normal_bbox.txt actors/
 
 # To download and save full size images along with cropped faces
-python download_facescrub.py actors_users_normal_bbox.txt actors/ --crop_face
+python python<version number>_download_facescrub.py actors_users_normal_bbox.txt actors/ --crop_face
 
 # Additional (optional) arguments to set log file name and time out to 10 seconds
-python download_facescrub.py actors_users_normal_bbox.txt actors/ \
+python python<version number>_download_facescrub.py actors_users_normal_bbox.txt actors/ \
 --crop_face --logfile=download.log --timeout=10
 ```
 
