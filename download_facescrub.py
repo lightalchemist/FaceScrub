@@ -133,7 +133,7 @@ def generate_headers(url):
     return headers
 
 
-def download_image(counter, url, sha256, timeout=240):
+def download_image(counter, url, sha256, timeout=60):
     """Download image from url.
     Returns response object if successful else return None
     """
@@ -276,7 +276,7 @@ def main():
     parser.add_argument("inputfile", help="FaceScrub data file. E.g., actors_users_normal_bbox.txt", type=str)
     parser.add_argument("datasetpath", help="Directory to save images", type=str)
     parser.add_argument("--crop_face", help="Whether to crop and save face images", dest="crop_face", action="store_true", default=False)
-    parser.add_argument('-t', '--timeout', type=float, help="Number of seconds (float) to wait before requests timeout", action="store", required=False, dest="timeout", default=240)
+    parser.add_argument('-t', '--timeout', type=float, help="Number of seconds (float) to wait before requests timeout", action="store", required=False, dest="timeout", default=60)
     parser.add_argument('-l', '--logfile', type=str, help="File to log operations", action="store", required=False, dest="logfile", default="download.log")
     args = parser.parse_args()
 
