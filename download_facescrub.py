@@ -156,28 +156,28 @@ def download_image(counter, url, sha256, timeout=240):
             return None
 
         if hashbinary(response.content) != sha256:
-            logger.error("- SHA 256 hash different: Line {number}: {url}".format(number=counter, url=url.encode("utf-8", "ignore")))
+            logger.error("Line {number}: SHA 256 hash different: {url}".format(number=counter, url=url.encode("utf-8", "ignore")))
             return None
 
         return response
 
     except KeyError as e:
-        logger.error("- Response does not have content-type: Line {number}: {url}".format(number=counter, url=url.encode("utf-8", "ignore")))
+        logger.error("Line {number}: {error}: {url}".format(number=counter, error=e, url=url.encode("utf-8", "ignore")))
         return None
     except ConnectionError as e:
-        logger.error("- {error}: Line {number}: {url}".format(error=e, number=counter, url=url.encode("utf-8", "ignore")))
+        logger.error("Line {number}: {error}: {url}".format(number=counter, error=e, url=url.encode("utf-8", "ignore")))
         return None
     except HTTPError as e:
-        logger.error("- {error}: Line {number}: {url}".format(error=e, number=counter, url=url.encode("utf-8", "ignore")))
+        logger.error("Line {number}: {error}: {url}".format(number=counter, error=e, url=url.encode("utf-8", "ignore")))
         return None
     except Timeout as e:
-        logger.error("- {error}: Line {number}: {url}".format(error=e, number=counter, url=url.encode("utf-8", "ignore")))
+        logger.error("Line {number}: {error}: {url}".format(number=counter, error=e, url=url.encode("utf-8", "ignore")))
         return None
     except TooManyRedirects as e:
-        logger.error("- {error}: Line {number}: {url}".format(error=e, number=counter, url=url.encode("utf-8", "ignore")))
+        logger.error("Line {number}: {error}: {url}".format(number=counter, error=e, url=url.encode("utf-8", "ignore")))
         return None
     except RequestException as e:
-        logger.error("- {error}: Line {number}: {url}".format(error=e, number=counter, url=url.encode("utf-8", "ignore")))
+        logger.error("Line {number}: {error}: {url}".format(number=counter, error=e, url=url.encode("utf-8", "ignore")))
         return None
 
 
@@ -232,19 +232,19 @@ def save_image(counter, response, datasetpath, name, image_id, face_id, bbox, sa
     # Cannot determine filetype.
     if filetype is None and not has_magic_lib:
         os.remove(outpath)
-        logger.error("Cannot determine file type: Line {number}: {url}".format(number=counter, url=url.encode("utf-8", "ignore")))
+        logger.error("Line {number}: Cannot determine file type: {url}".format(number=counter, url=url.encode("utf-8", "ignore")))
         return False
 
     # Get filetype using lib magic
     elif filetype is None and has_magic_lib:
         mimetype = magic.from_buffer(response.content, mime=True)
         if mimetype is None:
-            logger.error("Cannot determine file type: Line {number}: {url}".format(number=counter, url=url.encode("utf-8", "ignore")))
+            logger.error("Line {number}: Cannot determine file type: {url}".format(number=counter, url=url.encode("utf-8", "ignore")))
             return False
 
         ext = mimetypes.guess_extension(mimetype).lstrip('.')
         if ext is None:
-            logger.error("Cannot determine file type: Line {number}: {url}".format(number=counter, url=url.encode("utf-8", "ignore")))
+            logger.error("Line {number}: Cannot determine file type: {url}".format(number=counter, url=url.encode("utf-8", "ignore")))
             return False
         elif ext == "jpe":
             filetype = "jpeg"
@@ -265,7 +265,7 @@ def save_image(counter, response, datasetpath, name, image_id, face_id, bbox, sa
                                                                   ext=filetype)
             I.crop(bbox).save(os.path.join(output_dir, filename))
         except IOError as e:
-            logger.error("{}: Line {number}: {url}".format(e, number=counter, url=url.encode("utf-8", "ignore")))
+            logger.error("Line {number}: {error}: {url}".format(number=counter, error=e, url=url.encode("utf-8", "ignore")))
             return False
 
     return True
