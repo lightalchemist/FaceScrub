@@ -1,4 +1,4 @@
-# Script to download FaceScrub dataset
+# FaceScrub face dataset
 
 This project is released under a Creative Commons Attribution-NonCommercial 4.0 International Public License.
 To view a copy of this license, visit <http://creativecommons.org/licenses/by-nc/4.0/legalcode>
