@@ -51,6 +51,9 @@ python python<version number>_download_facescrub.py actors_users_normal_bbox.txt
 --crop_face --logfile=download.log --timeout=10
 ```
 
-The above code will save full size images to the directory actors/images and faces (if required) to actors/faces
+The above code will save full size images to the directory actors/images and faces (if required) to actors/faces.
+
+The naming convention for full size images is ``<name>_<image_id>.<ext>`` and ``<name>_<image_id>_<face_id>.<ext>`` for face images.
+Note that `<ext>` is the extension of image format for the image. It need not be "jpeg".
 
 
