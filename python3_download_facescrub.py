@@ -146,44 +146,47 @@ def download_image(counter, url, sha256, timeout=60):
         if response.status_code != requests.codes.OK:  # Status 200
             logger.error("Line {number}: Bad status code {status}: {url}".format(number=counter,
                                                                                  status=response.status_code,
-                                                                                 url=url.encode("utf-8", "ignore")))
+                                                                                 url=url))
             return None
 
         # Check if returned image
         if has_magic_lib:
+            # This returns byte string
             content_type = magic.from_buffer(response.content, mime=True)
+            # Convert to unicode
+            content_type = content_type.decode("utf-8")
         else:
             content_type = response.headers["content-type"]  # Sometimes this is missing, raising KeyError
 
         if (content_type is None) or not content_type.startswith("image"):
             logger.error("Line {number}: Invalid content-type {content_type}: {url}".format(number=counter,
                                                                                             content_type=content_type,
-                                                                                            url=url.encode("utf-8", "ignore")))
+                                                                                            url=url))
             return None
 
         if hashbinary(response.content) != sha256:
-            logger.error("Line {number}: SHA 256 hash different: {url}".format(number=counter, url=url.encode("utf-8", "ignore")))
+            logger.error("Line {number}: SHA 256 hash different: {url}".format(number=counter, url=url))
             return None
 
         return response
 
     except KeyError as e:
-        logger.error("Line {number}: {error}: {url}".format(number=counter, error=e, url=url.encode("utf-8", "ignore")))
+        logger.error("Line {number}: {error}: {url}".format(number=counter, error=e, url=url))
         return None
     except ConnectionError as e:
-        logger.error("Line {number}: {error}: {url}".format(number=counter, error=e, url=url.encode("utf-8", "ignore")))
+        logger.error("Line {number}: {error}: {url}".format(number=counter, error=e, url=url))
         return None
     except HTTPError as e:
-        logger.error("Line {number}: {error}: {url}".format(number=counter, error=e, url=url.encode("utf-8", "ignore")))
+        logger.error("Line {number}: {error}: {url}".format(number=counter, error=e, url=url))
         return None
     except Timeout as e:
-        logger.error("Line {number}: {error}: {url}".format(number=counter, error=e, url=url.encode("utf-8", "ignore")))
+        logger.error("Line {number}: {error}: {url}".format(number=counter, error=e, url=url))
         return None
     except TooManyRedirects as e:
-        logger.error("Line {number}: {error}: {url}".format(number=counter, error=e, url=url.encode("utf-8", "ignore")))
+        logger.error("Line {number}: {error}: {url}".format(number=counter, error=e, url=url))
         return None
     except RequestException as e:
-        logger.error("Line {number}: {error}: {url}".format(number=counter, error=e, url=url.encode("utf-8", "ignore")))
+        logger.error("Line {number}: {error}: {url}".format(number=counter, error=e, url=url))
         return None
 
 
@@ -240,19 +243,19 @@ def save_image(counter, response, datasetpath, name, image_id, face_id, bbox, sa
     # Cannot determine filetype.
     if filetype is None and not has_magic_lib:
         os.remove(outpath)
-        logger.error("Line {number}: Cannot determine file type: {url}".format(number=counter, url=url.encode("utf-8", "ignore")))
+        logger.error("Line {number}: Cannot determine file type: {url}".format(number=counter, url=url))
         return False
 
     # Get filetype using lib magic
     elif filetype is None and has_magic_lib:
         mimetype = magic.from_buffer(response.content, mime=True)
         if mimetype is None:
-            logger.error("Line {number}: Cannot determine file type: {url}".format(number=counter, url=url.encode("utf-8", "ignore")))
+            logger.error("Line {number}: Cannot determine file type: {url}".format(number=counter, url=url))
             return False
 
         ext = mimetypes.guess_extension(mimetype).lstrip('.')
         if ext is None:
-            logger.error("Line {number}: Cannot determine file type: {url}".format(number=counter, url=url.encode("utf-8", "ignore")))
+            logger.error("Line {number}: Cannot determine file type: {url}".format(number=counter, url=url))
             return False
         elif ext == "jpe":
             filetype = "jpeg"
@@ -273,7 +276,7 @@ def save_image(counter, response, datasetpath, name, image_id, face_id, bbox, sa
                                                                   ext=filetype)
             I.crop(bbox).save(os.path.join(output_dir, filename))
         except IOError as e:
-            logger.error("Line {number}: {error}: {url}".format(number=counter, error=e, url=url.encode("utf-8", "ignore")))
+            logger.error("Line {number}: {error}: {url}".format(number=counter, error=e, url=url))
             return False
 
     return True
