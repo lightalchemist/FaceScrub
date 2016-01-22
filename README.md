@@ -29,7 +29,7 @@ install requests security package extras to suppress "InsecurePlatformWarning".
 pip install "requests[security]"
 ```
 
-If your python installation is Anaconda, you may need to `conda install cryptography` before you `pip install "requests[security]"`
+If your python installation is **Anaconda**, you may need to `conda install cryptography` before you `pip install "requests[security]"`
 See [this Stackoverflow post](http://stackoverflow.com/questions/29099404/ssl-insecureplatform-error-when-using-requests-package?lq=1) for details.
 
 If the above `requests[security]` installation fails, you might need to install additional packages on your system.
