@@ -19,6 +19,15 @@ This code was tested on Ubuntu 14.04 and Mac OS X El Capitan.
 ```bash
 pip install requests
 
+# If you your Python version is < 2.7.9, install requests security package extras to suppress "InsecurePlatformWarning".
+pip install "requests[security]"
+# If above installation fails, you might need to install additional packages on your system.
+# Consult the following stackoverflow post for instructions:
+# http://stackoverflow.com/questions/29099404/ssl-insecureplatform-error-when-using-requests-package.
+# More details on this issue can be found in the following:
+# http://stackoverflow.com/questions/29134512/insecureplatformwarning-a-true-sslcontext-object-is-not-available-this-prevent
+# https://urllib3.readthedocs.org/en/latest/security.html#pyopenssl for details
+
 # Interchangeable with PIL. Can be ignored if you already have PIL installed
 pip install Pillow
 
