@@ -37,10 +37,11 @@ Note: actors_users_normal_bbox.txt is obtained from the above link.
 >>> # To download and save full size images along with cropped faces
 >>> python python2_download_facescrub.py actors_users_normal_bbox.txt actors/ --crop_face
 
->>> # Additional (optional) arguments to set log file name and time out to 10
->>> # seconds and max retries to 3 and starting at line 10 (note: line 1 is header)
+>>> # Additional (optional) arguments to set log file name, time out (10 seconds),
+>>> # max retries (3), start download at line 10 (note: line 1 is header) and
+>>> # end at line 20.
 >>> python python2_download_facescrub.py actors_users_normal_bbox.txt actors/ \
-    --crop_face --logfile=download.log --timeout=10 --max_retries=3 --start_at_line=10
+    --crop_face --logfile=download.log --timeout=10 --max_retries=3 --start_at_line=10 --end_at_line=20
 
 The above code will save full size images to the directory actors/images and faces (if required) to actors/faces
 
@@ -301,26 +302,39 @@ def main():
     parser.add_argument('-l', '--logfile', type=str, help="File to log operations", action="store", required=False, dest="logfile", default="download.log")
     parser.add_argument('-s', '--start_at_line', type=int, help="Line number in FaceScrub data file to start download. Note: Header counts as 1 line",
                         action="store", required=False, dest="start_at_line", default=2)
+    parser.add_argument('-e', '--end_at_line', type=int, help="Last line number in FaceScrub data file to download. Note: Header counts as 1 line",
+                        action="store", required=False, dest="end_at_line", default=0)
     args = parser.parse_args()
 
     assert args.timeout > 0, "timeout must be > 0"
     assert args.max_retries >= 1, "max_retries must be >= 1"
     assert args.start_at_line >= 1, "start_at_line must be >= 1"
+    assert args.end_at_line >= 0, "end_at_line must be >= 0"
+
+    end_at_line = None                  # Process until end of file
+    if args.end_at_line > 0:
+        end_at_line = args.end_at_line + 1
+
+    start_at_line = args.start_at_line - 1  # Index starts at 0
 
     create_logger(args.logfile)
     logger = logging.getLogger("logger")
     setup_session(args.max_retries)
 
     print("")
-    print('=' * 20)
+    print('=' * 30)
     print("Start processing from line: {}".format(args.start_at_line))
-    print('=' * 20)
+    if end_at_line is None:
+        print("Processing till end of file")
+    else:
+        print("End processing at line: {}".format(args.end_at_line))
+    print('=' * 30)
     print("")
 
     try:
         with open(args.inputfile) as infile:
-            for counter, line in enumerate(islice(infile, args.start_at_line - 1, None),
-                                           args.start_at_line):
+            for counter, line in enumerate(islice(infile, start_at_line, end_at_line),
+                                           start_at_line + 1):
                 name, image_id, face_id, url, bbox, sha256 = parse_line(line)
                 logger.info("Processing line {}: {}".format(counter, url))
                 response = download_image(counter, url, sha256, args.timeout)
