@@ -223,8 +223,6 @@ def save_image(counter, url, response, datasetpath, name, image_id, face_id, bbo
 
     logger = logging.getLogger("logger")
 
-    url = response.url
-
     # Output dir for images is datasetpath/images/name
     output_dir = os.path.join(datasetpath, "images", name)
     ensure_dir_exists(output_dir)
