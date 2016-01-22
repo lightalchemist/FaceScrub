@@ -208,7 +208,7 @@ def ensure_dir_exists(dirpath):
         os.makedirs(dirpath)
 
 
-def save_image(counter, response, datasetpath, name, image_id, face_id, bbox, save_face=False):
+def save_image(counter, url, response, datasetpath, name, image_id, face_id, bbox, save_face=False):
     """Save image
 
     Full images saved to datasetpath/images/name_image_id.ext
@@ -219,8 +219,6 @@ def save_image(counter, response, datasetpath, name, image_id, face_id, bbox, sa
     """
 
     logger = logging.getLogger("logger")
-
-    url = response.url
 
     # Output dir for images is datasetpath/images/name
     output_dir = os.path.join(datasetpath, "images", name)
@@ -301,7 +299,7 @@ def main():
                 if response is None:
                     continue
 
-                save_image(counter, response, args.datasetpath, name.replace(' ', '_'), image_id, face_id, bbox, save_face=args.crop_face)
+                save_image(counter, url, response, args.datasetpath, name.replace(' ', '_'), image_id, face_id, bbox, save_face=args.crop_face)
     except EnvironmentError as e:
         logger.error("{}".format(e))
 
