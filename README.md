@@ -56,9 +56,10 @@ python python<version number>_download_facescrub.py actors_users_normal_bbox.txt
 # To download and save full size images along with cropped faces
 python python<version number>_download_facescrub.py actors_users_normal_bbox.txt actors/ --crop_face
 
->>> # Additional (optional) arguments to set log file name and time out to 10 seconds and max retries to 3
+>>> # Additional (optional) arguments to set log file name and time out to 10
+>>> # seconds and max retries to 3 and starting at line 10 (note: line 1 is header)
 >>> python python<version number>_download_facescrub.py actors_users_normal_bbox.txt actors/ \
-    --crop_face --logfile=download.log --timeout=10 --max_retries=3
+    --crop_face --logfile=download.log --timeout=10 --max_retries=3 --start_at_line=10
 
 ```
 
