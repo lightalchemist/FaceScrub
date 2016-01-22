@@ -21,16 +21,18 @@ This code was tested on Ubuntu 14.04 and Mac OS X El Capitan.
 ```bash
 pip install requests
 
-# If your Python version is < 2.7.9,
-# install requests security package extras to suppress "InsecurePlatformWarning".
-pip install "requests[security]"
+```
 
+If your Python version is < 2.7.9,
+install requests security package extras to suppress "InsecurePlatformWarning".
+```bash
+pip install "requests[security]"
 ```
 
 If your python installation is Anaconda, you may need to `conda install cryptography` before you `pip install "requests[security]"`
 See [this Stackoverflow post](http://stackoverflow.com/questions/29099404/ssl-insecureplatform-error-when-using-requests-package?lq=1) for details.
 
-If the above installation fails, you might need to install additional packages on your system.
+If the above `requests[security]` installation fails, you might need to install additional packages on your system.
 Consult this [link](http://stackoverflow.com/questions/29099404/ssl-insecureplatform-error-when-using-requests-package) for instructions.
 More details on this issue can be found in this [Stackoverflow post](http://stackoverflow.com/questions/29134512/insecureplatformwarning-a-true-sslcontext-object-is-not-available-this-prevent)
 and [urllib3 documentation](https://urllib3.readthedocs.org/en/latest/security.html#pyopenssl).
