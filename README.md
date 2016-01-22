@@ -3,7 +3,7 @@
 This project is released under a Creative Commons Attribution-NonCommercial 4.0 International Public License.
 To view a copy of this license, visit <http://creativecommons.org/licenses/by-nc/4.0/legalcode>
 
-**download_facescrub.py** downloads the [FaceScrub](http://vintage.winklerbros.net/facescrub.html) dataset described in 
+**python<version>_download_facescrub.py** downloads the [FaceScrub](http://vintage.winklerbros.net/facescrub.html) dataset described in 
 
 > H.-W. Ng, S. Winkler.
 > A data-driven approach to cleaning large face datasets.
@@ -16,22 +16,31 @@ This code was tested on Ubuntu 14.04 and Mac OS X El Capitan.
 
 # Requirements:
 
+* requests
+
 ```bash
 pip install requests
 
 # If your Python version is < 2.7.9,
 # install requests security package extras to suppress "InsecurePlatformWarning".
 pip install "requests[security]"
-# If the above installation fails, you might need to install additional packages on your system.
-# Consult the following stackoverflow post for instructions:
-# http://stackoverflow.com/questions/29099404/ssl-insecureplatform-error-when-using-requests-package.
-# More details on this issue can be found in the following links:
-# http://stackoverflow.com/questions/29134512/insecureplatformwarning-a-true-sslcontext-object-is-not-available-this-prevent
-# https://urllib3.readthedocs.org/en/latest/security.html#pyopenssl for details
 
+```
+If the above installation fails, you might need to install additional packages on your system.
+Consult this [link](http://stackoverflow.com/questions/29099404/ssl-insecureplatform-error-when-using-requests-package) for instructions.
+More details on this issue can be found in this [stackoverflow post](http://stackoverflow.com/questions/29134512/insecureplatformwarning-a-true-sslcontext-object-is-not-available-this-prevent)
+and [urllib3 documentation](https://urllib3.readthedocs.org/en/latest/security.html#pyopenssl).
+
+* PIL
+
+```bash
 # Interchangeable with PIL. Can be ignored if you already have PIL installed
 pip install Pillow
+```
 
+* python-magic (optional)
+
+```bash
 # Optional, but good to have, for robustly detecting file type.
 # Might be difficult to get working on Windows. In that case, ignore it.
 # If a file's type cannot be determined, it will be removed.
