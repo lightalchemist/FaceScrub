@@ -3,7 +3,7 @@
 This project is released under a Creative Commons Attribution-NonCommercial 4.0 International Public License.
 To view a copy of this license, visit <http://creativecommons.org/licenses/by-nc/4.0/legalcode>
 
-**python<version>_download_facescrub.py** downloads the [FaceScrub](http://vintage.winklerbros.net/facescrub.html) dataset described in 
+**python\<version number\>\_download_facescrub.py** downloads the [FaceScrub](http://vintage.winklerbros.net/facescrub.html) dataset described in 
 
 > H.-W. Ng, S. Winkler.
 > A data-driven approach to cleaning large face datasets.
