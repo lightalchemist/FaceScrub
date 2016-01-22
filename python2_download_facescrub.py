@@ -158,10 +158,7 @@ def download_image(counter, url, sha256, timeout=60):
         response = session.get(url, headers=headers, timeout=timeout)
 
         if response.status_code != requests.codes.OK:  # Status 200
-            logger.error("Line {number}: Bad status code {status}: {url}".format(number=counter,
-                                                                                 status=response.status_code,
-                                                                                 url=url.encode("utf-8", "ignore")))
-            return None
+            response.raise_for_status()
 
         # Check if returned image
         if has_magic_lib:
@@ -197,6 +194,9 @@ def download_image(counter, url, sha256, timeout=60):
         logger.error("Line {number}: {error}: {url}".format(number=counter, error=e, url=url.encode("utf-8", "ignore")))
         return None
     except RequestException as e:
+        logger.error("Line {number}: {error}: {url}".format(number=counter, error=e, url=url.encode("utf-8", "ignore")))
+        return None
+    except Exception as e:
         logger.error("Line {number}: {error}: {url}".format(number=counter, error=e, url=url.encode("utf-8", "ignore")))
         return None
 
