@@ -25,7 +25,11 @@ pip install requests
 # install requests security package extras to suppress "InsecurePlatformWarning".
 pip install "requests[security]"
 
+
 ```
+
+If your python installation is Anaconda, you may need to `conda install cryptography` before you `pip install "requests[security]"`
+
 If the above installation fails, you might need to install additional packages on your system.
 Consult this [link](http://stackoverflow.com/questions/29099404/ssl-insecureplatform-error-when-using-requests-package) for instructions.
 More details on this issue can be found in this [stackoverflow post](http://stackoverflow.com/questions/29134512/insecureplatformwarning-a-true-sslcontext-object-is-not-available-this-prevent)
