@@ -19,7 +19,7 @@ This code was tested on Ubuntu 14.04 and Mac OS X El Capitan.
 ```bash
 pip install requests
 
-# If you your Python version is < 2.7.9,
+# If your Python version is < 2.7.9,
 # install requests security package extras to suppress "InsecurePlatformWarning".
 pip install "requests[security]"
 # If the above installation fails, you might need to install additional packages on your system.
