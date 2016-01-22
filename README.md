@@ -25,7 +25,6 @@ pip install requests
 # install requests security package extras to suppress "InsecurePlatformWarning".
 pip install "requests[security]"
 
-
 ```
 
 If your python installation is Anaconda, you may need to `conda install cryptography` before you `pip install "requests[security]"`
