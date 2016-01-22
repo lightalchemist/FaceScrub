@@ -22,7 +22,7 @@ pip install requests
 # If you your Python version is < 2.7.9,
 # install requests security package extras to suppress "InsecurePlatformWarning".
 pip install "requests[security]"
-# If above installation fails, you might need to install additional packages on your system.
+# If the above installation fails, you might need to install additional packages on your system.
 # Consult the following stackoverflow post for instructions:
 # http://stackoverflow.com/questions/29099404/ssl-insecureplatform-error-when-using-requests-package.
 # More details on this issue can be found in the following links:
