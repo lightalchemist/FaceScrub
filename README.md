@@ -56,9 +56,10 @@ python python<version number>_download_facescrub.py actors_users_normal_bbox.txt
 # To download and save full size images along with cropped faces
 python python<version number>_download_facescrub.py actors_users_normal_bbox.txt actors/ --crop_face
 
-# Additional (optional) arguments to set log file name and time out to 10 seconds
-python python<version number>_download_facescrub.py actors_users_normal_bbox.txt actors/ \
---crop_face --logfile=download.log --timeout=10
+>>> # Additional (optional) arguments to set log file name and time out to 10 seconds and max retries to 3
+>>> python python<version number>_download_facescrub.py actors_users_normal_bbox.txt actors/ \
+    --crop_face --logfile=download.log --timeout=10 --max_retries=3
+
 ```
 
 The above code will save full size images to the directory actors/images and faces (if required) to actors/faces.

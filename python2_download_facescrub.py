@@ -37,8 +37,9 @@ Note: actors_users_normal_bbox.txt is obtained from the above link.
 >>> # To download and save full size images along with cropped faces
 >>> python python2_download_facescrub.py actors_users_normal_bbox.txt actors/ --crop_face
 
->>> # Additional (optional) arguments to set log file name and time out to 10 seconds
->>> python python2_download_facescrub.py actors_users_normal_bbox.txt actors/ --crop_face --logfile=download.log --timeout=10
+>>> # Additional (optional) arguments to set log file name and time out to 10 seconds and max retries to 3
+>>> python python2_download_facescrub.py actors_users_normal_bbox.txt actors/ \
+    --crop_face --logfile=download.log --timeout=10 --max_retries=3
 
 The above code will save full size images to the directory actors/images and faces (if required) to actors/faces
 
@@ -70,6 +71,17 @@ from requests import RequestException
 
 # Visit website and copy user agent string as single line https://www.whatismybrowser.com/detect/what-is-my-user-agent
 MY_USER_AGENT_STRING="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/47.0.2526.106 Chrome/47.0.2526.106 Safari/537.36"
+
+session = None
+
+def setup_session(max_retries=1):
+    # Use a `Session` instance to customize how `requests` handles making HTTP requests.
+    global session
+    session = requests.Session()
+
+    # `mount` a custom adapter that retries failed connections for HTTP and HTTPS requests.
+    session.mount("http://", requests.adapters.HTTPAdapter(max_retries=max_retries))
+    session.mount("https://", requests.adapters.HTTPAdapter(max_retries=max_retries))
 
 
 def create_logger(logfilename):
@@ -141,7 +153,7 @@ def download_image(counter, url, sha256, timeout=60):
     logger = logging.getLogger("logger")
     try:
         headers = generate_headers(url)
-        response = requests.get(url, headers=headers, timeout=timeout)
+        response = session.get(url, headers=headers, timeout=timeout)
 
         if response.status_code != requests.codes.OK:  # Status 200
             logger.error("Line {number}: Bad status code {status}: {url}".format(number=counter,
@@ -283,11 +295,13 @@ def main():
     parser.add_argument("datasetpath", help="Directory to save images", type=str)
     parser.add_argument("--crop_face", help="Whether to crop and save face images", dest="crop_face", action="store_true", default=False)
     parser.add_argument('-t', '--timeout', type=float, help="Number of seconds (float) to wait before requests timeout", action="store", required=False, dest="timeout", default=60)
+    parser.add_argument('-r', '--max_retries', type=int, help="Maximum number of retries before giving up", action="store", required=False, dest="max_retries", default=1)
     parser.add_argument('-l', '--logfile', type=str, help="File to log operations", action="store", required=False, dest="logfile", default="download.log")
     args = parser.parse_args()
 
     create_logger(args.logfile)
     logger = logging.getLogger("logger")
+    setup_session(args.max_retries)
 
     try:
         with open(args.inputfile) as infile:
