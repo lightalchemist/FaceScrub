@@ -73,7 +73,7 @@ python python<version number>_download_facescrub.py actors_users_normal_bbox.txt
 
 # Additional (optional) arguments to set log file name, time out (10 seconds),
 # max retries (3), start download at line 10 (note: line 1 is header) and
-# end at line 20.
+# end at line 20. Leave out --end_at_line to download till the end of file.
 python python<version number>_download_facescrub.py actors_users_normal_bbox.txt actors/ \
 --crop_face --logfile=download.log --timeout=10 --max_retries=3 --start_at_line=10 --end_at_line=20
 

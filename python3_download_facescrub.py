@@ -296,7 +296,7 @@ def save_image(counter, url, response, datasetpath, name, image_id, face_id, bbo
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Script to download images for FaceScrub dataset")
+    parser = argparse.ArgumentParser(description="Script to download FaceScrub dataset")
     parser.add_argument("inputfile", help="FaceScrub data file. E.g., actors_users_normal_bbox.txt", type=str)
     parser.add_argument("datasetpath", help="Directory to save images", type=str)
     parser.add_argument("--crop_face", help="Whether to crop and save face images", dest="crop_face", action="store_true", default=False)
