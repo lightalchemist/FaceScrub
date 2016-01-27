@@ -84,4 +84,4 @@ The above code will save full size images to the directory actors/images and fac
 The naming convention for full size images is ``<name>_<image_id>.<ext>`` and ``<name>_<image_id>_<face_id>.<ext>`` for face images.
 Note that `<ext>` is the extension of image format for the image. It need not be "jpeg".
 
-All error messages in the log are of the form "Line <number>: <error message>: <url>", in case users are interested in them.
+All error messages in the log are of the form "Line \<number\>: \<error message\>: \<url\>", in case users are interested in them.
