@@ -71,6 +71,7 @@ from requests import Timeout
 from requests import HTTPError
 from requests import RequestException
 
+import concurrent.futures
 
 # Visit website and copy user agent string as single line https://www.whatismybrowser.com/detect/what-is-my-user-agent
 MY_USER_AGENT_STRING="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/47.0.2526.106 Chrome/47.0.2526.106 Safari/537.36"
@@ -148,7 +149,7 @@ def generate_headers(url):
     return headers
 
 
-def download_image(counter, url, sha256, timeout=60):
+def download_image(counter, url, sha256, timeout):
     """Download image from url.
     Returns response object if successful else return None
     """
@@ -165,8 +166,6 @@ def download_image(counter, url, sha256, timeout=60):
         if has_magic_lib:
             # This returns byte string
             content_type = magic.from_buffer(response.content, mime=True)
-            # Convert to unicode
-            content_type = content_type.decode("utf-8")
         else:
             content_type = response.headers["content-type"]  # Sometimes this is missing, raising KeyError
 
@@ -300,19 +299,22 @@ def main():
     parser.add_argument("inputfile", help="FaceScrub data file. E.g., actors_users_normal_bbox.txt", type=str)
     parser.add_argument("datasetpath", help="Directory to save images", type=str)
     parser.add_argument("--crop_face", help="Whether to crop and save face images", dest="crop_face", action="store_true", default=False)
-    parser.add_argument('-t', '--timeout', type=float, help="Number of seconds (float) to wait before requests timeout", action="store", required=False, dest="timeout", default=60)
+    parser.add_argument('-t', '--timeout', type=float, help="Number of seconds (float) to wait before requests timeout", action="store", required=False, dest="timeout", default=10)
     parser.add_argument('-r', '--max_retries', type=int, help="Maximum number of retries before giving up", action="store", required=False, dest="max_retries", default=1)
     parser.add_argument('-l', '--logfile', type=str, help="File to log operations", action="store", required=False, dest="logfile", default="download.log")
     parser.add_argument('-s', '--start_at_line', type=int, help="Line number in FaceScrub data file to start download. Note: Header counts as 1 line",
                         action="store", required=False, dest="start_at_line", default=2)
     parser.add_argument('-e', '--end_at_line', type=int, help="Last line number in FaceScrub data file to download. Note: Header counts as 1 line",
                         action="store", required=False, dest="end_at_line", default=0)
+    parser.add_argument('-n', '--number_of_thread', type=int, help="Number of threads run in thread poll when fetching data",
+                        action="store", required=False, dest="number_of_thread", default=10)
     args = parser.parse_args()
 
     assert args.timeout > 0, "timeout must be > 0"
     assert args.max_retries >= 1, "max_retries must be >= 1"
     assert args.start_at_line >= 1, "start_at_line must be >= 1"
     assert args.end_at_line >= 0, "end_at_line must be >= 0"
+    assert args.number_of_thread >= 1, "number_of_thread must be >= 1"
 
     end_at_line = None                  # Process until end of file
     if args.end_at_line > 0:
@@ -334,20 +336,25 @@ def main():
     print('=' * 30)
     print("")
 
+    infile = None
     try:
-        with open(args.inputfile) as infile:
-            for counter, line in enumerate(islice(infile, start_at_line, end_at_line),
-                                           start_at_line + 1):
-                name, image_id, face_id, url, bbox, sha256 = parse_line(line)
-                logger.info("Processing line {}: {}".format(counter, url))
-                response = download_image(counter, url, sha256, args.timeout)
-                if response is None:
-                    continue
-
-                save_image(counter, url, response, args.datasetpath, name.replace(' ', '_'), image_id, face_id, bbox, save_face=args.crop_face)
-    except EnvironmentError as e:
+        infile = open(args.inputfile)
+    except Exception as e:
         logger.error("{}".format(e))
+        return
 
+    def _f(counter, line, args):
+        name, image_id, face_id, url, bbox, sha256 = parse_line(line)
+        logger.info("Processing line {}: {}".format(counter, url))
+        response = download_image(counter, url, sha256, args.timeout)
+        if response:
+            save_image(counter, url, response, args.datasetpath, name.replace(' ', '_'), image_id, face_id, bbox, save_face=args.crop_face)
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=args.number_of_thread) as executor:
+        futures = []
+        for counter, line in enumerate(islice(infile,start_at_line,end_at_line), start_at_line+1):
+            future = executor.submit(_f, counter, line, args)
+            futures.append(future)
 
 if __name__ == "__main__":
     main()
