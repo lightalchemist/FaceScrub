@@ -11,8 +11,13 @@ To view a copy of this license, visit <http://creativecommons.org/licenses/by-nc
 
 If you are using Python 2, use the script `python2_download_facescrub.py`.
 If you are using Python 3, use `python3_download_facescrub.py`.
+In particular, the Python 3 version has been updated by [ottocho](https://github.com/ottocho) to support multi-threading.
 
 This code was tested on Ubuntu 14.04 and Mac OS X El Capitan.
+
+# Recommendations
+
+I suggest **shuffling the dataset file** before running the script to download the images as this will (hopefully) make it less likely that you are spamming a particular website with requests, especially if you use the multi-threaded version and have many threads running simultaneously. You want to do this as some servers may block you if they detect many simultaneous and sustained connections from a particular source. Some servers might also return you images with watermark or corrupted images for the same reason.
 
 # Requirements:
 
